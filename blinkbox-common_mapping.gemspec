@@ -2,12 +2,12 @@
 $LOAD_PATH.unshift(File.join(__dir__, "lib"))
 
 Gem::Specification.new do |gem|
-  gem.name          = "blinkbox-common_logging"
+  gem.name          = "blinkbox-common_mapping"
   gem.version       = open("./VERSION").read rescue "0.0.0"
   gem.authors       = ["JP Hastings-Spital"]
   gem.email         = ["jphastings@blinkbox.com"]
-  gem.description   = %q{Simple helper for logging to gelf in the format required by blinkbox Books}
-  gem.summary       = %q{Simple helper for logging to gelf in the format required by blinkbox Books}
+  gem.description   = %q{Deal with blinkbox Books virtual URLs}
+  gem.summary       = %q{Deal with blinkbox Books virtual URLs}
   gem.homepage      = ""
 
   gem.files         = Dir["lib/**/*.rb","VERSION"]
@@ -15,7 +15,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "blinkbox-common_messaging", "~> 0.1"
+  # Will depend on this later
+  # gem.add_dependency "blinkbox-common_messaging", "~> 0.1"
 
   gem.add_development_dependency "rake"
   gem.add_development_dependency "rspec", "~>3.0"

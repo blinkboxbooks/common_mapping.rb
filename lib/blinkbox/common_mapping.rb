@@ -9,7 +9,7 @@ module Blinkbox
     # We assume that everything is mapped to /mnt/ for the mocking purposes
     def open(mapped_uri)
       uri = URI(mapped_uri)
-      location = File.join("/mnt", uri.hostname || "", uri.path)
+      location = File.join("/mnt", uri.hostname || "", URI.unescape(uri.path))
 
       if block_given?
         File.open(location) do |f|

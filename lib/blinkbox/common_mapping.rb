@@ -1,5 +1,6 @@
 require "uri"
 require "time"
+require "socket"
 require "net/http"
 require "tempfile"
 require "blinkbox/common_messaging"
@@ -28,11 +29,16 @@ module Blinkbox
     def initialize(storage_service_url, service_name: raise(ArgumentError, "A service name is required"), schema_root: "schema", mapping_timeout: 7 * 24 * 3600)
       @ss = URI.parse(storage_service_url)
       @service_name = service_name
+      uid = [Socket.gethostname, Process.pid].join("$")
+      queue_name = "#{service_name.tr('/','.')}.mapping_updates.#{uid}"
       @queue = CommonMessaging::Queue.new(
-        "#{service_name.tr('/','.')}.mapping_updates",
+        queue_name,
         exchange: "Mapping",
         bindings: [{ "content-type" => "application/vnd.blinkbox.books.mapping.update.v1+json" }],
-        prefetch: 1
+        prefetch: 1,
+        exclusive: true,
+        temporary: true,
+        dlx: nil
       )
       @timeout = mapping_timeout
       opts = { block: false }
@@ -45,6 +51,7 @@ module Blinkbox
       @queue.subscribe(opts) do |metadata, update|
         update_mapping_variable!(Time.parse(metadata[:timestamp]), update)
       end
+      @@logger.debug "Queue #{queue_name} created, bound and subscribed to"
       retrieve_mapping!
       @@logger.info "Mapping initialized"
     end

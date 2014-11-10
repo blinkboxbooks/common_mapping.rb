@@ -10,7 +10,26 @@ context Blinkbox::CommonMapping do
     )
   end
 
-  describe "#open" do
+  describe "#open (with block)" do
+    it "must return an IO type object given a valid token referencing File resources" do
+      content = "Content of file"
+      token = create_token_for(create_uri_for(content, type: "file"))
+      @instance.open(token) do |io|
+        expect(io.read).to eq(content)
+      end
+    end
+
+    it "must return an IO type object given a valid token referencing HTTP resources" do
+      content = "Content of file"
+      uri = create_uri_for(content, type: "http")
+      token = create_token_for(uri)
+      @instance.open(token) do |io|
+        expect(io.read).to eq(content)
+      end
+    end
+  end
+
+  describe "#open (without block)" do
     it "must return an IO type object given a valid token referencing File resources" do
       content = "Content of file"
       token = create_token_for(create_uri_for(content, type: "file"))

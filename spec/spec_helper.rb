@@ -3,6 +3,7 @@ require "blinkbox/common_mapping"
 require "rspec/mocks"
 require "webmock/rspec"
 require "securerandom"
+require "tempfile"
 
 module Helpers
   def create_token_for(*uris)

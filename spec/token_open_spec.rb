@@ -1,5 +1,3 @@
-require "tempfile"
-
 context Blinkbox::CommonMapping do
   before :each do
     stub_request(:get, "http://storage-service.example.com/mappings").to_return(body: proc { mappings_response.to_json })

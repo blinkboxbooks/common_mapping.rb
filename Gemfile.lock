@@ -1,32 +1,35 @@
 PATH
   remote: .
   specs:
-    blinkbox-common_logging (0.0.0)
-      blinkbox-common_messaging (~> 0.1)
+    blinkbox-common_mapping (0.0.3)
+      blinkbox-common_messaging (~> 0.5)
 
 GEM
   remote: http://artifactory.blinkbox.local/artifactory/api/gems/bbb-gems/
   remote: http://artifactory.blinkbox.local/artifactory/api/gems/rubygems/
   specs:
-    activesupport (4.1.6)
+    activesupport (4.1.7)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     amq-protocol (1.9.2)
-    blinkbox-common_messaging (0.2.0)
+    blinkbox-common_messaging (0.5.0)
       activesupport
       bunny (~> 1.4)
       json-schema
       ruby-units (~> 1.4)
-    bunny (1.4.1)
+    bunny (1.6.3)
       amq-protocol (>= 1.9.2)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
     i18n (0.6.11)
     json (1.8.1)
-    json-schema (2.2.5)
+    json-schema (2.4.1)
     minitest (5.4.2)
     multi_json (1.10.1)
     rake (10.3.2)
@@ -43,6 +46,7 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.1)
     ruby-units (1.4.5)
+    safe_yaml (1.0.4)
     simplecov (0.9.0)
       docile (~> 1.1.0)
       multi_json
@@ -51,13 +55,17 @@ GEM
     thread_safe (0.3.4)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    webmock (1.20.4)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  blinkbox-common_logging!
+  blinkbox-common_mapping!
   rake
   rspec (~> 3.0)
   rspec-mocks
   simplecov
+  webmock

@@ -77,7 +77,6 @@ module Blinkbox
           io.close
           return nil
         rescue
-          raise
           # There was a problem with this provider file, register it and move on to another
           status = retrieve_status(token, provider_failure: provider)
           available_providers = status['providers'].map { |this_provider, this_status|
@@ -159,9 +158,10 @@ module Blinkbox
         raise MissingAssetError unless File.exist?(path)
         io = File.open(path)
       when "http", "https"
-        io = Tempfile.new(uri)
+        io = Tempfile.new("common_mapping_file")
         Net::HTTP.start(uri.host, uri.port) do |http|
           http.request_get(uri.path) do |resp|
+            raise "Received a #{resp.code} while trying to retrieve #{uri}" if resp.code != "200"
             resp.read_body do |segment|
               io.write(segment)
             end

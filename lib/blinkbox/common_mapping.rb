@@ -13,6 +13,9 @@ module Blinkbox
       "0.0.0-unknown"
     end
 
+    # Set a logger to send all log messages to
+    #
+    # @param [:debug,:info,:warn,:error,:fatal] logger A logger instance.
     def self.logger=(logger)
       @@logger = logger
     end
@@ -26,6 +29,13 @@ module Blinkbox
       def fatal(*); end
     }.new
 
+    # Initializing a mapper will retrieve the mapping file from the specified storage service and set up an exclusive queue
+    # to receive updates which might occur while this instance is in use.
+    #
+    # @param [String] storage_service_url The Base URL for the storage service.
+    # @param [String] :service_name The name of your service. Defines the name of the mapping updates queue.
+    # @param [String, nil] :schema_root If not nil, the location (relative to the current directory) of the schema root (mapping/update/v1.schema.json will be used to validate messages).
+    # @param [Integer] :mapping_timeout The length of time before a new mapping file is requested from the storage service.
     def initialize(storage_service_url, service_name: raise(ArgumentError, "A service name is required"), schema_root: "schema", mapping_timeout: 7 * 24 * 3600)
       @ss = URI.parse(storage_service_url)
       @service_name = service_name
@@ -179,6 +189,8 @@ module Blinkbox
       request = Net::HTTP::Get.new(path)
       request.initialize_http_header({"User-Agent" => "#{@service_name} // common_mapping.rb v#{VERSION}"})
       @http.request(request)
+    rescue Timeout::Error
+      raise StorageServiceUnavailableError, "A request to the storage service timed out"
     end
 
     # @param [String] token The token that wants to be checked

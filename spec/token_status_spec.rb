@@ -22,5 +22,14 @@ context Blinkbox::CommonMapping do
         @instance.status("http://not.a/token")
       }.to raise_error(Blinkbox::InvalidTokenError)
     end
+
+    it "must raise StorageServiceUnavailableError if the storage service is unreachable" do
+      token = "bbbmap:label:whatever"
+      stub_request(:get, "http://storage-service.example.com/resources/#{token}")
+        .to_timeout
+      expect {
+        @instance.status(token)
+      }.to raise_error(Blinkbox::StorageServiceUnavailableError)
+    end
   end
 end

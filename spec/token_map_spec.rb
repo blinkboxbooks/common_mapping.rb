@@ -31,6 +31,31 @@ context Blinkbox::CommonMapping do
       )
     end
 
+    it "must list the earliest url if two labels provide the same providers" do
+      @labels = [
+        {
+          label: "extensioned",
+          extractor: "^bbbmap:label:(?<path>.+)\\.(?<ext>.+)$",
+          providers: {
+            alpha: "http://alpha.example.com/ext-%{ext}/%{path}"
+          }
+        },
+        {
+          label: "label",
+          extractor: "^bbbmap:label:(?<path>.+)$",
+          providers: {
+            alpha: "http://alpha.example.com/%{path}"
+          }
+        }
+      ]
+      # Force an update of the mapping file
+      @instance.retrieve_mapping!
+
+      expect(@instance.send(:map, "bbbmap:label:abcdef123456.jpg")).to eq(
+        "alpha" => "http://alpha.example.com/ext-jpg/abcdef123456"
+      )
+    end
+
     it "must return an empty hash if the token doesn't match any mappings" do
       # Load no mappings
       expect(@instance.send(:map, "bbbmap:label:whatever")).to eq({})

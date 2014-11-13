@@ -1,4 +1,5 @@
 require "uri"
+require "json"
 require "time"
 require "socket"
 require "net/http"
@@ -59,7 +60,9 @@ module Blinkbox
       # We're about to request the latest mapping file, so we don't need any of the ones on the queue
       # @queue.purge
       @queue.subscribe(opts) do |metadata, update|
-        update_mapping_variable!(Time.parse(metadata[:timestamp]), update)
+        next :reject unless metadata[:timestamp].is_a?(Time)
+        update_mapping!(metadata[:timestamp], update)
+        :ack
       end
       @@logger.debug "Queue #{queue_name} created, bound and subscribed to"
       retrieve_mapping!

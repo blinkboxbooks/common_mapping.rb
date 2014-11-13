@@ -37,6 +37,13 @@ module Helpers
   def mappings_response
     @labels
   end
+
+  def deliver_message!(string, extra_metadata = {})
+    metadata = {
+      timestamp: Time.now
+    }.merge(extra_metadata)
+    @subscribe_block.call(metadata, string)
+  end
 end
 
 RSpec.configure do |c|
@@ -45,5 +52,15 @@ RSpec.configure do |c|
   c.before :each do
     @labels = []
     @created_uris = 0
+
+    queue_class = 'Blinkbox::CommonMessaging::Queue'
+    @fake_queue = instance_double(queue_class)
+    @fake_queue_class = double(queue_class, :new => @fake_queue)
+
+    stub_const(queue_class, @fake_queue_class)
+    @subscribe_block = proc {}
+    allow(@fake_queue).to receive(:subscribe) do |_opts, &block|
+      @subscribe_block = block
+    end
   end
 end

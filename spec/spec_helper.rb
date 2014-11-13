@@ -6,8 +6,7 @@ require "securerandom"
 require "tempfile"
 
 module Helpers
-  def create_token_for(*uris)
-    label = "label-" << (@labels.size + 1).to_s
+  def create_token_for(*uris, label: "label-" << (@labels.size + 1).to_s)
     token = "bbbmap:#{label}:#{SecureRandom.hex}"
     @labels.push(
       label: label,

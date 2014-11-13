@@ -171,7 +171,7 @@ module Blinkbox
         io = Tempfile.new("common_mapping_file")
         Net::HTTP.start(uri.host, uri.port) do |http|
           http.request_get(uri.path) do |resp|
-            raise "Received a #{resp.code} while trying to retrieve #{uri}" if resp.code != "200"
+            raise MissingAssetError, "Received a #{resp.code} while trying to retrieve #{uri}" if resp.code != "200"
             resp.read_body do |segment|
               io.write(segment)
             end
@@ -198,6 +198,8 @@ module Blinkbox
     def valid_token?(token)
       uri = URI(token)
       uri.scheme == "bbbmap"
+    rescue URI::InvalidURIError
+      false
     end
 
     # Uses the mapping file retrieved to convert a token into URLs. The first item in the hash
@@ -235,8 +237,6 @@ module Blinkbox
         end
       end
       matched_providers
-    rescue URI::InvalidURIError
-      raise InvalidTokenError, "#{token} is not a valid blinkbox Books asset token"
     end
   end
 

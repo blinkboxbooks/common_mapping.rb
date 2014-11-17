@@ -42,6 +42,7 @@ module Blinkbox
       @service_name = service_name
       uid = [Socket.gethostname, Process.pid].join("$")
       queue_name = "#{service_name.tr('/','.')}.mapping_updates.#{uid}"
+      
       @queue = CommonMessaging::Queue.new(
         queue_name,
         exchange: "Mapping",
@@ -51,19 +52,23 @@ module Blinkbox
         temporary: true,
         dlx: nil
       )
+
       @timeout = mapping_timeout
+
       opts = { block: false }
       if !schema_root.nil?
         CommonMessaging.init_from_schema_at(File.join(schema_root, "mapping"), schema_root)
         opts[:accept] = [CommonMessaging::MappingUpdateV1]
       end
+
       # We're about to request the latest mapping file, so we don't need any of the ones on the queue
-      # @queue.purge
+      @queue.purge!
       @queue.subscribe(opts) do |metadata, update|
         next :reject unless metadata[:timestamp].is_a?(Time)
         update_mapping!(metadata[:timestamp], update)
         :ack
       end
+
       @@logger.debug "Queue #{queue_name} created, bound and subscribed to"
       retrieve_mapping!
       @@logger.info "Mapping initialized"

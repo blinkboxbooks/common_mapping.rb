@@ -59,6 +59,7 @@ RSpec.configure do |c|
 
     stub_const(queue_class, @fake_queue_class)
     @subscribe_block = proc {}
+    allow(@fake_queue).to receive(:purge!)
     allow(@fake_queue).to receive(:subscribe) do |_opts, &block|
       @subscribe_block = block
     end

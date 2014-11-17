@@ -41,8 +41,8 @@ module Blinkbox
       @ss = URI.parse(storage_service_url)
       @service_name = service_name
       uid = [Socket.gethostname, Process.pid].join("$")
-      queue_name = "#{service_name.tr('/','.')}.mapping_updates.#{uid}"
-      
+      queue_name = "#{service_name.tr('/', '.')}.mapping_updates.#{uid}"
+
       @queue = CommonMessaging::Queue.new(
         queue_name,
         exchange: "Mapping",
@@ -61,7 +61,7 @@ module Blinkbox
         opts[:accept] = [CommonMessaging::MappingUpdateV1]
       end
 
-      # We're about to request the latest mapping file, so we don't need any of the ones on the queue
+      # We're about to request the latest mapping file, so we don't need any of the ones on the queue.
       @queue.purge!
       @queue.subscribe(opts) do |metadata, update|
         next :reject unless metadata[:timestamp].is_a?(Time)

@@ -15,11 +15,11 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  # Will depend on this later
-  # gem.add_dependency "blinkbox-common_messaging", "~> 0.1"
+  gem.add_dependency "blinkbox-common_messaging", "~> 0.5"
 
   gem.add_development_dependency "rake"
   gem.add_development_dependency "rspec", "~>3.0"
   gem.add_development_dependency "rspec-mocks"
+  gem.add_development_dependency "webmock"
   gem.add_development_dependency "simplecov"
 end

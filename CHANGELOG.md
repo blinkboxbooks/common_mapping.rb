@@ -1,5 +1,15 @@
 # Change log
 
+## 0.1.0 ([#4](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/4) 2014-11-18 16:05:09)
+
+Legit
+
+### New features
+
+- Actually works!
+- Can deal with HTTP and FILE urls passed in the mapping file from the storage service
+- Opens files and downloads HTTP resources into temporary files, passing an IO object back for interaction with.
+
 ## 0.0.3 ([#3](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/3) 2014-10-27 18:11:33)
 
 Unescape URI components

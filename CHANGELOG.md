@@ -1,5 +1,13 @@
 # Change log
 
+## 0.1.1 ([#5](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/5) 2014-11-20 09:25:18)
+
+Valid User Agent
+
+### Bug fix
+
+- Previous User-Agent was invalid.
+
 ## 0.1.0 ([#4](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/4) 2014-11-18 16:05:09)
 
 Legit

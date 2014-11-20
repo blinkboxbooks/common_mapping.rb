@@ -195,7 +195,7 @@ module Blinkbox
     def ss_get(path)
       @http ||= Net::HTTP.new(@ss.host, @ss.port)
       request = Net::HTTP::Get.new(path)
-      request.initialize_http_header({"User-Agent" => "#{@service_name} // common_mapping.rb v#{VERSION}"})
+      request.initialize_http_header({"User-Agent" => "common_mapping.rb/#{VERSION}"})
       @http.request(request)
     rescue Timeout::Error
       raise StorageServiceUnavailableError, "A request to the storage service timed out"

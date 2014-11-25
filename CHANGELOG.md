@@ -1,5 +1,14 @@
 # Change log
 
+## 0.1.2 ([#6](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/6) 2014-11-25 17:48:31)
+
+Pluralise default folder
+
+### Improvements
+
+- The default schema file is `schemas` not `schema`
+- Upgraded to needing the version of common_messaging from [#8](/Platform/common_messaging.rb/pull/8)
+
 ## 0.1.1 ([#5](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/5) 2014-11-20 09:25:18)
 
 Valid User Agent

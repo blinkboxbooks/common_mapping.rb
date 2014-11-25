@@ -37,7 +37,7 @@ module Blinkbox
     # @param [String] :service_name The name of your service. Defines the name of the mapping updates queue.
     # @param [String, nil] :schema_root If not nil, the location (relative to the current directory) of the schema root (mapping/update/v1.schema.json will be used to validate messages).
     # @param [Integer] :mapping_timeout The length of time before a new mapping file is requested from the storage service.
-    def initialize(storage_service_url, service_name: raise(ArgumentError, "A service name is required"), schema_root: "schema", mapping_timeout: 7 * 24 * 3600)
+    def initialize(storage_service_url, service_name: raise(ArgumentError, "A service name is required"), schema_root: "schemas", mapping_timeout: 7 * 24 * 3600)
       @ss = URI.parse(storage_service_url)
       @service_name = service_name
       uid = [Socket.gethostname, Process.pid].join("$")

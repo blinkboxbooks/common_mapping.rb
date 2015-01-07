@@ -1,5 +1,13 @@
 # Change log
 
+## 0.1.3 ([#7](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/7) 2015-01-07 17:13:29)
+
+Return
+
+### Bugfix
+
+- The `open` method should return the value the block yields when a block is given.
+
 ## 0.1.2 ([#6](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/6) 2014-11-25 17:48:31)
 
 Pluralise default folder

@@ -79,6 +79,7 @@ module Blinkbox
     # 
     # @param [String] token The token referring to the asset to be opened
     # @raise InvalidTokenError if the given token string isn't a valid token
+    # @return An IO object referencing the object or (if a block was given) the value returned from the block
     def open(token)
       raise InvalidTokenError unless valid_token?(token)
       @@logger.debug "Opening #{token}"
@@ -91,9 +92,9 @@ module Blinkbox
         begin
           io = open_uri(URI.parse(uri))
           return io if !block_given?
-          yield(io)
+          returns = yield(io)
           io.close
-          return nil
+          return returns
         rescue
           # There was a problem with this provider file, register it and move on to another
           status = retrieve_status(token, provider_failure: provider)

@@ -98,6 +98,10 @@ module Blinkbox
         rescue
           # There was a problem with this provider file, register it and move on to another
           status = retrieve_status(token, provider_failure: provider)
+          if status.nil?
+            @@logger.warn "Storage service has no status for #{token}."
+            break
+          end
           available_providers = status['providers'].map { |this_provider, this_status|
             this_status['available'] ? this_provider : nil
           }.compact

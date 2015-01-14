@@ -62,6 +62,14 @@ context Blinkbox::CommonMapping do
       expect(a_request(:get, uris[1])).to_not have_been_made
     end
 
+    describe "storage service status unavailable for resource" do
+      it "must raise a MissingAssetError exception" do
+        token = create_token_for("file:///file/that/does/not/exist.epub")
+        stub_request(:get, "http://storage-service.example.com/resources/#{token}").to_return(status: 404)
+        expect{ @instance.open(token) }.to raise_error(Blinkbox::MissingAssetError)
+      end
+    end
+
     describe "assets missing from providers" do
       it "must try the first provider marked as working in the given asset's status" do
         content = "Content of file"

@@ -1,5 +1,13 @@
 # Change log
 
+## 0.1.4 ([#8](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/8) 2015-01-14 15:06:59)
+
+Deal with Storage Service omissions
+
+### Bug fix
+
+- Deal with the situation where the storage service doesn't have status information for the given token. (This *always* occurs with the fake storage service)
+
 ## 0.1.3 ([#7](https://git.mobcastdev.com/Platform/common_mapping.rb/pull/7) 2015-01-07 17:13:29)
 
 Return

@@ -5,9 +5,9 @@ rvm:
 deploy:
   provider: rubygems
   api_key:
-    secure: JZ75Bc6uZQTDNvpQHJiZ+AvmY8JgFjbMpfNzAAktxByd+kk/8dvRspMesWWRH1pCewyReBpPEMFih7FoJBUMAIIHYOG9Ixe8VRC8tvXqIOIabSovUmnd78f1JP5A9fv3CmFLmi1hctd6qi515z0WF93QrmU12Z/99m7PMaukics=
+    secure: d3hZ59WTiKS88F921Nol2unTq0NiJQvlCks6qCb+pteFFsd5NHRIvHjVMwtjsSrl2/UddeXT8+pehAdzEycnGRG2vfyhIIyDcLDGLRSJgjl2TxhDxKl31bBhDn5d4oB6fYaS+cCBe7DYYcbdova/QkvKxmibTziDpMwbStdR9EA=
   gem: blinkbox-common_mapping
   on:
-    repo: blinkboxbooks/common_mapping
+    repo: blinkboxbooks/common_mapping.rb
     rvm: 2.1.2
     branch: master

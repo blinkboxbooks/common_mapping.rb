@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-$LOAD_PATH.unshift(File.join(__dir__, "lib"))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "lib"))
 
 Gem::Specification.new do |gem|
   gem.name          = "blinkbox-common_mapping"
